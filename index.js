@@ -24,6 +24,11 @@ const persons = [
   }
 ]
 
+// info page
+app.get('/info', (request, response) => {
+  response.send(`<p>Phonebook has info for ${persons.length} people</p> <p>${new Date()}</p>`)
+})
+
 // get all persons
 app.get('/api/persons', (request, response) => {
   response.json(persons)

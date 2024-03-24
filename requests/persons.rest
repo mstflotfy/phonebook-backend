@@ -1,2 +1,5 @@
 ### get_all_persons
 GET http://localhost:3001/api/persons
+
+### get info
+GET http://localhost:3001/info
