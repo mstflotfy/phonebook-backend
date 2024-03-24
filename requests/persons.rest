@@ -9,3 +9,12 @@ GET http://localhost:3001/api/persons/2
 
 ### delete_person
 DELETE  http://localhost:3001/api/persons/2
+
+### add_person
+POST http://localhost:3001/api/persons 
+content-type: application/json
+
+{
+  "name": "mstflotfy",
+  "number": "22222222"
+}
