@@ -18,3 +18,6 @@ content-type: application/json
   "name": "mstflotfy",
   "number": "02333"
 }
+
+### unkown_endpoint
+GET http://localhost:3001/hello
