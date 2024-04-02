@@ -34,7 +34,7 @@ app.get('/api/persons', (request, response, next) => {
 })
 
 // get one person
-app.get('/api/persons/:id', (request, response) => {
+app.get('/api/persons/:id', (request, response, next) => {
   const id = Number(request.params.id)
   const person = persons.find(p => p.id === id)
   if (person) {
@@ -64,7 +64,7 @@ app.delete('/api/persons/:id', (request, response, next) => {
 })
 
 // add new person
-app.post('/api/persons', (request, response) => {
+app.post('/api/persons', (request, response, next) => {
   const body = request.body
 
   if (!body.name) {
@@ -90,6 +90,22 @@ app.post('/api/persons', (request, response) => {
       response.json(savedPerson).end()
     })
     .catch(error => next(error))
+})
+
+// update person
+app.put('/api/persons/:id', (req, res, next) => {
+  const id = req.params.id
+  const body = req.body
+
+  const newPerson = {
+    name: body.name,
+    number: body.number
+  }
+
+  Person
+    .findByIdAndUpdate(id, newPerson, {new: true})
+    .then(updatedPerson => res.json(updatedPerson))
+    .catch(e => next(e))
 })
 
 const errorHandler = (error, request, response, next) => {
