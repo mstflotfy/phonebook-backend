@@ -24,16 +24,13 @@ app.get('/info', (request, response) => {
 })
 
 // get all persons
-app.get('/api/persons', (request, response) => {
+app.get('/api/persons', (request, response, next) => {
   Person
     .find({})
     .then(people => {
       response.json(people)
     })
-    .catch(error => {
-      console.log('error fetching people', error)
-      response.status(500).json({ error: 'eror fetching people'}).end()
-    })
+    .catch(error => next(error))
 })
 
 // get one person
@@ -49,7 +46,7 @@ app.get('/api/persons/:id', (request, response) => {
 })
 
 // del person
-app.delete('/api/persons/:id', (request, response) => {
+app.delete('/api/persons/:id', (request, response, next) => {
   const id = request.params.id
 
   Person
@@ -63,9 +60,7 @@ app.delete('/api/persons/:id', (request, response) => {
         response.status(204).end()
       }
     })
-    .catch(error => {
-      response.status(500).json({ error: 'error deleting person'}).end(0)
-    })
+    .catch(error => next(error))
 })
 
 // add new person
@@ -94,11 +89,20 @@ app.post('/api/persons', (request, response) => {
     .then(savedPerson => {
       response.json(savedPerson).end()
     })
-    .catch(error => {
-      console.log('error adding new person')
-      response.json({error: 'error adding new person'}).end()
-    })
+    .catch(error => next(error))
 })
+
+const errorHandler = (error, request, response, next) => {
+  console.log(error.message)
+
+  if (error.name === 'CastError') {
+    return response.status(400).send({ error: 'malformed id'})
+  }
+
+  next(error)
+}
+
+app.use(errorHandler)
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
