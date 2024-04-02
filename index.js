@@ -19,8 +19,14 @@ app.use(morgan('tiny'))
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
 
 // info page
-app.get('/info', (request, response) => {
-  response.send(`<p>Phonebook has info for ${persons.length} people</p> <p>${new Date()}</p>`)
+app.get('/info', (request, response, next) => {
+  Person
+    .find({})
+    .then(people => {
+      response
+        .send(`<p>Phonebook has info for ${people.length} people</p> <p>${new Date()}</p>`)
+    })
+    .catch(e => next(e))
 })
 
 // get all persons
@@ -35,14 +41,19 @@ app.get('/api/persons', (request, response, next) => {
 
 // get one person
 app.get('/api/persons/:id', (request, response, next) => {
-  const id = Number(request.params.id)
-  const person = persons.find(p => p.id === id)
-  if (person) {
-    response.json(person)
-  } else {
-    response.statusMessage = 'The requested person does not exist'
-    response.status(404).end()
-  }
+  const id = request.params.id
+
+  Person
+    .findById(id)
+    .then(returnedPerson => {
+      if (returnedPerson) {
+        response.json(returnedPerson)
+      } else {
+        response.json(204).end()
+      }
+    })
+    .catch(error => next(error))
+
 })
 
 // del person
