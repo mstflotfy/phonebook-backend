@@ -50,10 +50,22 @@ app.get('/api/persons/:id', (request, response) => {
 
 // del person
 app.delete('/api/persons/:id', (request, response) => {
-  const id = Number(request.params.id)
-  persons = persons.filter(person => person.id !== id)
+  const id = request.params.id
 
-  response.status(204).end()
+  Person
+    .findByIdAndDelete(id)
+    .then(deletedPerson => {
+      if (deletedPerson) {
+        console.log('deleted: ', deletedPerson)
+        response.json(deletedPerson)
+      } else {
+        console.log('person not found')
+        response.status(204).end()
+      }
+    })
+    .catch(error => {
+      response.status(500).json({ error: 'error deleting person'}).end(0)
+    })
 })
 
 // add new person
