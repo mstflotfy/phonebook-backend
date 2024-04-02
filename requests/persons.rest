@@ -5,7 +5,7 @@ GET http://localhost:3001/api/persons
 GET http://localhost:3001/info
 
 ### get_one_person
-GET http://localhost:3001/api/persons/2
+GET http://localhost:3001/api/persons/660735ebaa91a246d084720e
 
 ### delete_person
 DELETE  http://localhost:3001/api/persons/2
