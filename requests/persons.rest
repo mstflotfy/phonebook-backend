@@ -15,8 +15,8 @@ POST http://localhost:3001/api/persons
 content-type: application/json
 
 {
-  "name": "te",
-  "number": "123"
+  "name": "testPerson",
+  "number": "123-2"
 }
 
 ### update_person
@@ -24,8 +24,8 @@ PUT http://localhost:3001/api/persons/660c6fd2714a9a034ff9fab4
 content-type: application/json
 
 {
-  "name": "mstflotfy",
-  "number": "00000000"
+  "name": "mstf",
+  "number": "12"
 }
 
 ### unkown_endpoint
