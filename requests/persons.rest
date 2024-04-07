@@ -16,7 +16,7 @@ content-type: application/json
 
 {
   "name": "testPerson",
-  "number": "123-2"
+  "number": "002-01000329521"
 }
 
 ### update_person
