@@ -3,8 +3,7 @@ const mongoose = require('mongoose')
 const userName = process.argv[2]
 const password = process.argv[3]
 
-const url = 
-`mongodb+srv://${userName}:${password}@cluster0.cep1p6c.mongodb.net/phonebookApp?retryWrites=true&w=majority&appName=Cluster0`
+const url = `mongodb+srv://${userName}:${password}@cluster0.cep1p6c.mongodb.net/phonebookApp?retryWrites=true&w=majority&appName=Cluster0`
 
 mongoose.set('strictQuery', false)
 
@@ -29,10 +28,10 @@ if (process.argv.length === 4) {
   process.exit(1)
 }
 
-function createPerson(name, number) {
+function createPerson (name, number) {
   const person = new Person({
-    name: name,
-    number: number
+    name,
+    number
   })
 
   person.save().then(res => {
@@ -41,7 +40,7 @@ function createPerson(name, number) {
   })
 }
 
-function findAll() {
+function findAll () {
   Person.find({}).then(res => {
     res.forEach(person => {
       console.log(person)
